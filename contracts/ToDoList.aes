@@ -1,0 +1,39 @@
+// interface helper for todo list workshop
+// sophia docs: https://github.com/aeternity/protocol/blob/master/contracts/sophia.md
+contract ToDoList = 
+
+  // TODO: define contents of state as record state = { } to hold tasks.
+  record task = {
+    name : string,
+    completed : bool
+    }
+  
+  //The smart contract should be able to store several tasks and those tasks should be indexed
+  //Each task should contain a variable "name" and a variable "completed" which can only be true or false
+  record state = {
+    taskList  : map(int, task) 
+    }
+
+  // TODO: initialize state with empty data
+  entrypoint init() : state = {
+      taskList =  {}
+    }
+
+  // TODO: The entrypoint "add_task" is accepting a new task name,
+  // define a new task and store it to the state,
+  // Hint: put(state{}) allows you to mutate state
+  stateful entrypoint add_task(task_name: string) =
+    let task = {
+      name = task_name,
+      completed = false 
+      }
+    put(state{ taskList[ Map.size(state.taskList) + 1 ] = task })
+    
+
+  // TODO: set existing task of state to completed
+  stateful entrypoint set_task_completed(seq_id : int) =
+    put(state{ taskList[seq_id].completed = true })    
+
+  // TODO: return all tasks of state in format {name: string, completed: bool}
+  entrypoint get_tasks() : map(int, task) =
+    state.taskList
