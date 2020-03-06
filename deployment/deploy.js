@@ -14,14 +14,16 @@
  *  OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  *  PERFORMANCE OF THIS SOFTWARE.
  */
+const Ae = require('@aeternity/aepp-sdk').Universal;
 const Deployer = require('aeproject-lib').Deployer;
+const gasLimit = 1000000;
 
-const deploy = async (network, privateKey, compiler, networkId) => {
-    let deployer = new Deployer(network, privateKey, compiler, networkId)
+const deploy = async (network, privateKey) => {
+	let deployer = new Deployer(network, privateKey)
 
-    await deployer.deploy("./contracts/ExampleContract.aes")
+	let result = await deployer.deploy("./contracts/ToDoManager.aes")
 };
 
 module.exports = {
-    deploy
+	deploy
 };
